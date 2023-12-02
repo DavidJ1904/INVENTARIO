@@ -30,4 +30,19 @@ public class ServiciosProveedores {
 			return Response.serverError().build();
 		}
 	}
+
+        @Path("crear")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response crear (Proveedor proveedor) {
+		System.out.println(">>>>>>"+proveedor);
+		ProveedoresBDD provBDD = new ProveedoresBDD();
+		try {
+			provBDD.insertar(proveedor);
+			return Response.ok().build();
+		} catch (KrakeDevException e) {
+			e.printStackTrace();
+			return Response.serverError().build();
+		}
+	}
 }
