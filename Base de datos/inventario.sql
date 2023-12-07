@@ -52,52 +52,51 @@ select*from categoria_unidades_medidas;
 
 -- TABLA UNIDADES DE MEDIDAS
 create table udm(
-	codigo_udm char(1) not null,
-	nombre varchar(20) not null,
+	nombre varchar(5) not null,
 	descripcion varchar(100) not null,
 	categoria_udm char(1) not null,
-	constraint unidades_medidas primary key (codigo_udm),
+	constraint unidades_medidas primary key (nombre),
 	constraint categoria_unidades_medidas_udm_fk foreign key (categoria_udm) references categoria_unidades_medidas(codigo_cat_udm) 
 );
-insert into udm(codigo_udm,nombre,descripcion,categoria_udm)
-values('1','ml','mililitros','V');
-insert into udm(codigo_udm,nombre,descripcion,categoria_udm)
-values('2','l','litros','V');
-insert into udm(codigo_udm,nombre,descripcion,categoria_udm)
-values('3','u','unidad','U');
-insert into udm(codigo_udm,nombre,descripcion,categoria_udm)
-values('4','d','docena','U');
-insert into udm(codigo_udm,nombre,descripcion,categoria_udm)
-values('5','g','gramos','P');
-insert into udm(codigo_udm,nombre,descripcion,categoria_udm)
-values('6','kg','kilogramos','P');
-insert into udm(codigo_udm,nombre,descripcion,categoria_udm)
-values('7','lb','libras','P');
+insert into udm(nombre,descripcion,categoria_udm)
+values('ml','mililitros','V');
+insert into udm(nombre,descripcion,categoria_udm)
+values('l','litros','V');
+insert into udm(nombre,descripcion,categoria_udm)
+values('u','unidad','U');
+insert into udm(nombre,descripcion,categoria_udm)
+values('d','docena','U');
+insert into udm(nombre,descripcion,categoria_udm)
+values('g','gramos','P');
+insert into udm(nombre,descripcion,categoria_udm)
+values('kg','kilogramos','P');
+insert into udm(nombre,descripcion,categoria_udm)
+values('lb','libras','P');
 
 select *from udm;
 
 --TABLA PRODUCTOS
 create table producto(
-	codigo_producto int not null,
+	codigo_producto serial not null,
 	nombre varchar(100) not null,
-	unidades_medidas char(1) not null,
+	unidades_medidas char(5) not null,
 	precio money,
 	iva boolean,
 	coste money,
 	categoria int not null,
 	stock int not null,
 	constraint producto_pk primary key (codigo_producto),
-	constraint producto_udm_fk foreign key (unidades_medidas) references udm(codigo_udm),
+	constraint producto_udm_fk foreign key (unidades_medidas) references udm(nombre),
 	constraint producto_categorias_fk foreign key (categoria) references categorias(codigo_cat)
 );
 insert into producto(codigo_producto,nombre,unidades_medidas,precio,iva,coste,categoria,stock)
-values(1,'Coca cola pequeño','3',0.58,true,0.3729,2,100);
+values(1,'Coca cola pequeño','u',0.58,true,0.3729,2,100);
 insert into producto(codigo_producto,nombre,unidades_medidas,precio,iva,coste,categoria,stock)
-values(2,'Salsa de tomate','6',0.95,true,0.873,3,10);
+values(2,'Salsa de tomate','kg',0.95,true,0.873,3,10);
 insert into producto(codigo_producto,nombre,unidades_medidas,precio,iva,coste,categoria,stock)
-values(3,'Mostaza','6',0.95,true,0.89,3,0);
+values(3,'Mostaza','kg',0.95,true,0.89,3,0);
 insert into producto(codigo_producto,nombre,unidades_medidas,precio,iva,coste,categoria,stock)
-values(4,'Fuztea','3',0.80,true,0.72,2,50);
+values(4,'Fuztea','u',0.80,true,0.72,2,50);
 
 select*from producto;
 
@@ -181,7 +180,7 @@ create table proveedores(
 	nombre varchar(100),
 	telefono varchar(20),
 	correo varchar(50),
-	direccion varchar(100),
+	direccion varchar(50),
 	constraint proveedores_pk primary key (indentificador),
 	constraint proveedores_tipo_documento_fk foreign key (tipo_documento) references tipo_documento(codigo)
 );
@@ -209,7 +208,7 @@ select * from estados_pedidos;
 
 --TABLA CABECERA PEDIDO
 create table cabecera_pedidos(
-	numero int not null,
+	numero serial not null,
 	proveedor varchar(20),
 	fecha timestamp,
 	estado char(1) not null,
@@ -218,10 +217,10 @@ create table cabecera_pedidos(
 	constraint estado_pedidos_fk foreign key (estado) references estados_pedidos(codigo)
 );
 
-insert into cabecera_pedidos(numero,proveedor,fecha,estado)
-values(1,'1792285747','20/11/2023','R');
-insert into cabecera_pedidos(numero,proveedor,fecha,estado)
-values(2,'1792285747','20/11/2023','R');
+insert into cabecera_pedidos(proveedor,fecha,estado)
+values('1792285747','20/11/2023','R');
+insert into cabecera_pedidos(proveedor,fecha,estado)
+values('1792285747','20/11/2023','R');
 
 select * from cabecera_pedidos;
 
@@ -247,5 +246,4 @@ values(2,1,10,3.73,10);
 
 select*from detalle_pedido;
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-select indentificador, tipo_documento,nombre,telefono,correo,direccion from proveedores 
-where upper(nombre) like '%SA%'
+select * from cabecera_pedidos;

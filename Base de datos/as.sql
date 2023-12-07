@@ -13,3 +13,9 @@ and upper(prod.nombre) like '%M%'
 select * from producto prod,udm um, categorias cat
 where prod.unidades_medidas= um.codigo_udm
 and prod.categoria = cat.codigo_cat
+
+insert into producto (codigo_producto,nombre,unidades_medidas,precio,iva,coste,categoria,stock)
+values(5,'Mayoneza',3,0.98,'true',0.70,2,0)
+
+select * from udm
+select * from categorias
