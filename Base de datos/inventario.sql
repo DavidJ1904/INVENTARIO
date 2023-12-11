@@ -77,7 +77,7 @@ select *from udm;
 
 --TABLA PRODUCTOS
 create table producto(
-	codigo_producto serial not null,
+	codigo_producto int not null,
 	nombre varchar(100) not null,
 	unidades_medidas char(5) not null,
 	precio money,
@@ -99,10 +99,11 @@ insert into producto(codigo_producto,nombre,unidades_medidas,precio,iva,coste,ca
 values(4,'Fuztea','u',0.80,true,0.72,2,50);
 
 select*from producto;
+update producto set nombre='pesi pequeña',unidades_medidas ='u',precio = money(1.50),iva=true,coste = money(1.45),categoria=1,stock= 10 where codigo_producto = 1;
 
 --TABLA CABECERA VENTAS
 create table cabecera_ventas(
-	codigo_cv int not null,
+	codigo_cv serial not null,
 	fecha timestamp,
 	total_sin_iva money,
 	iva money,
@@ -110,9 +111,10 @@ create table cabecera_ventas(
 	constraint cabecera_ventas_pk primary key (codigo_cv)
 );
 
-insert into cabecera_ventas(codigo_cv,fecha,total_sin_iva,iva,total)
-values(1,'20/11/2023 20:00',3.26,0.39,3.65);
+insert into cabecera_ventas(fecha,total_sin_iva,iva,total)
+values('20/11/2023 20:00',3.26,0.39,3.65);
 select*from cabecera_ventas;
+update cabecera_ventas set total_sin_iva = 1.29, iva=1.30, total=2.59 where codigo_cv=1;
 
 --TABLA DETALLE VENTA 
 create table detalle_ventas(
@@ -137,7 +139,7 @@ select*from detalle_ventas;
 
 --TABLA HISTORIAL STOCK
 create table historial_stock(
-	codigo int not null,
+	codigo serial not null,
 	fecha timestamp,
 	referencia varchar(100),
 	producto int not null,
@@ -146,16 +148,16 @@ create table historial_stock(
 	constraint historial_stock_producto_fk foreign key (producto) references producto(codigo_producto)
 );
 
-insert into historial_stock(codigo,fecha,referencia,producto,cantidad)
-values(1,'20/11/2023 19:59','pedido 1',1,100);
-insert into historial_stock(codigo,fecha,referencia,producto,cantidad)
-values(2,'20/10/2023 19:59','pedido 4',1,50);
-insert into historial_stock(codigo,fecha,referencia,producto,cantidad)
-values(3,'21/11/2023 19:40','pedido 1',1,10);
-insert into historial_stock(codigo,fecha,referencia,producto,cantidad)
-values(4,'20/11/2023 20:59','venta 1',1,-5);
-insert into historial_stock(codigo,fecha,referencia,producto,cantidad)
-values(5,'20/11/2023 20:40','venta 1',4,1);
+insert into historial_stock(fecha,referencia,producto,cantidad)
+values('20/11/2023 19:59','pedido 1',1,100);
+insert into historial_stock(fecha,referencia,producto,cantidad)
+values('20/10/2023 19:59','pedido 4',1,50);
+insert into historial_stock(fecha,referencia,producto,cantidad)
+values('21/11/2023 19:40','pedido 1',1,10);
+insert into historial_stock(fecha,referencia,producto,cantidad)
+values('20/11/2023 20:59','venta 1',1,-5);
+insert into historial_stock(fecha,referencia,producto,cantidad)
+values('20/11/2023 20:40','venta 1',4,1);
 
 select * from historial_stock;
 
@@ -191,6 +193,7 @@ insert into proveedores(indentificador, tipo_documento,nombre,telefono,correo,di
 values('1792285747001','R','Sancks SA','0992920306','sanck@outlook.com','la tola');
 
 select * from proveedores;
+
 
 --TABLA ESTADO PEDIDOS
 create table estados_pedidos(
@@ -244,6 +247,5 @@ values(1,4,50,11.80,50);
 insert into detalle_pedido(cabecera_pedido,producto,cantidad_solicitada,subtotal,cantidad_recibida)
 values(2,1,10,3.73,10);
 
-select*from detalle_pedido;
+select*from detalle_pedido dt,producto pro where dt.producto = pro.codigo_producto
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-select * from cabecera_pedidos;

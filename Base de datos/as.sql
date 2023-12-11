@@ -19,3 +19,13 @@ values(5,'Mayoneza',3,0.98,'true',0.70,2,0)
 
 select * from udm
 select * from categorias
+
+select * from cabecera_pedidos
+select * from detalle_pedido
+
+select * from historial_stock
+
+
+update detalle_pedido
+set cantidad_recibida =40, subtotal=20
+where codigo=5
