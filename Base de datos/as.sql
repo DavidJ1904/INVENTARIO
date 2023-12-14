@@ -29,3 +29,6 @@ select * from historial_stock
 update detalle_pedido
 set cantidad_recibida =40, subtotal=20
 where codigo=5
+
+select * from detalle_ventas
+select * from cabecera_ventas
