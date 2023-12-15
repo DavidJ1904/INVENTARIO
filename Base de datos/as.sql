@@ -17,6 +17,9 @@ and prod.categoria = cat.codigo_cat
 insert into producto (codigo_producto,nombre,unidades_medidas,precio,iva,coste,categoria,stock)
 values(5,'Mayoneza',3,0.98,'true',0.70,2,0)
 
+select * from proveedores
+select * from tipo_documento
+select * from producto
 select * from udm
 select * from categorias
 
@@ -25,10 +28,6 @@ select * from detalle_pedido
 
 select * from historial_stock
 
-
-update detalle_pedido
-set cantidad_recibida =40, subtotal=20
-where codigo=5
 
 select * from detalle_ventas
 select * from cabecera_ventas
